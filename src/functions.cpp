@@ -1,34 +1,32 @@
 #include <iostream>
 #include <map>
+#include <tuple>
 
 // Fungsi untuk melakukan perhitungan val1 op val2
-float calc(float val1, float val2, int op) {
+std::tuple<float, bool> calc(float val1, float val2, int op) {
   float x;
-  try {
-    switch (op) {
-      case 0:
-        x = val1 + val2;
-        break;
-      case 1:
-        x = val1 - val2;
-        break;
-      case 2:
-        x = val1 * val2;
-        break;
-      case 3:
-        if (val2 == 0) {
-          x = 0;
-        } else {
-          x = val1 / val2;
-        }
-        break;
-      default:
+  switch (op) {
+    case 0:
+      x = val1 + val2;
+      break;
+    case 1:
+      x = val1 - val2;
+      break;
+    case 2:
+      x = val1 * val2;
+      break;
+    case 3:
+      if (val2 == 0) {
         x = 0;
-    }
-  } catch (const std::exception& e) {
-    x = 0;
+        return std::make_tuple(x, false);
+      } else {
+        x = val1 / val2;
+      }
+      break;
+    default:
+      x = 0;
   }
-  return x;
+  return std::make_tuple(x, true);
 }
 
 // Fungsi untuk menghasilkan semua kemungkinan permutasi operator
