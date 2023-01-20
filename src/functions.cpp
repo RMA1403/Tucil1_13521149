@@ -69,28 +69,28 @@ void permuteInput(float arrOutput[24][4], float arrInput[4]) {
 }
 
 // Fungsi untuk menampilkan operasi ke layar
-void showOperation(float num[4], int op[3], int bracket) {
+void showOperation(float num[4], int op[3], int order) {
   char temp[4] = {'+', '-', '*', '/'};
-  switch (bracket) {
+  switch (order) {
     case 0:
-      std::cout << "((" << num[0] << temp[op[0]] << num[1] << ")" << temp[op[1]]
-                << num[2] << ")" << temp[op[2]] << num[3] << "\n";
+      printf("((%d %c %d) %c %d) %c %d\n", int(num[0]), temp[op[0]],
+             int(num[1]), temp[op[1]], int(num[2]), temp[op[2]], int(num[3]));
       break;
     case 1:
-      std::cout << "(" << num[0] << temp[op[1]] << "(" << num[1] << temp[op[0]]
-                << num[2] << "))" << temp[op[2]] << num[3] << "\n";
+      printf("(%d %c (%d %c %d)) %c %d\n", int(num[0]), temp[op[1]],
+             int(num[1]), temp[op[0]], int(num[2]), temp[op[2]], int(num[3]));
       break;
     case 2:
-      std::cout << num[0] << temp[op[2]] << "((" << num[1] << temp[op[0]]
-                << num[2] << ")" << temp[op[1]] << num[3] << ")\n";
+      printf("%d %c ((%d %c %d) %c %d)\n", int(num[0]), temp[op[2]],
+             int(num[1]), temp[op[0]], int(num[2]), temp[op[1]], int(num[3]));
       break;
     case 3:
-      std::cout << num[0] << temp[op[2]] << "(" << num[1] << temp[op[1]] << "("
-                << num[2] << temp[op[0]] << num[3] << "))\n";
+      printf("%d %c (%d %c (%d %c %d))\n", int(num[0]), temp[op[2]],
+             int(num[1]), temp[op[1]], int(num[2]), temp[op[0]], int(num[3]));
       break;
     case 4:
-      std::cout << "(" << num[0] << temp[op[0]] << num[1] << ")" << temp[op[2]]
-                << "(" << num[2] << temp[op[1]] << num[3] << ")\n";
+      printf("(%d %c %d) %c (%d %c %d)\n", int(num[0]), temp[op[0]],
+             int(num[1]), temp[op[2]], int(num[2]), temp[op[1]], int(num[3]));
       break;
   }
 }
