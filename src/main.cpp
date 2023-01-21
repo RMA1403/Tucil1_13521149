@@ -1,19 +1,26 @@
+#include <chrono>
 #include <iostream>
 #include <stack>
 #include <tuple>
+#include <vector>
 
 #include "./data.cpp"
 #include "./functions.cpp"
 
+using namespace std::chrono;
+
 int main() {
   float userInput[4];
   int solutionCount = 0;
+  std::vector<std::string> resultArray;
 
   bool isInputValid = handleInput(userInput);
   if (!isInputValid) {
     std::cout << "Masukkan tidak valid\n";
     return 0;
   }
+
+  auto startTime = high_resolution_clock::now();
 
   for (int order = 0; order < 5; order++) {
     int permutedOps[64][3];
@@ -54,12 +61,28 @@ int main() {
 
         if (isCalcValid && operationStack.top() == 24.0) {
           solutionCount++;
-          showOperation(permutedInputs[i], permutedOps[j], order);
+          char resultString[18];
+          operationToString(resultString, permutedInputs[i], permutedOps[j],
+                            order);
+          resultArray.push_back((std::string)resultString);
         }
       }
     }
   }
 
-  std::cout << solutionCount << " solusi ditemukan\n";
+  auto stopTime = high_resolution_clock::now();
+
+  if (solutionCount > 0) {
+    std::cout << solutionCount << " solutions found\n";
+    for (std::string s : resultArray) {
+      std::cout << s;
+    }
+  } else {
+    std::cout << "No solution found\n";
+  }
+
+  microseconds execTime = duration_cast<microseconds>(stopTime - startTime);
+  printf("Algorithm execution time: %ld microseconds\n", execTime.count());
+
   return 0;
 }

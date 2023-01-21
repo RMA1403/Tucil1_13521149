@@ -1,3 +1,6 @@
+#include <time.h>
+
+#include <cstdlib>
 #include <iostream>
 #include <map>
 #include <tuple>
@@ -66,29 +69,34 @@ void permuteInput(float arrOutput[24][4], float arrInput[4]) {
   }
 }
 
-// Fungsi untuk menampilkan operasi ke layar
-void showOperation(float num[4], int op[3], int order) {
+// Fungsi untuk mengubah bentuk operasi menjadi string
+void operationToString(char* outputString, float num[4], int op[3], int order) {
   char temp[4] = {'+', '-', '*', '/'};
   switch (order) {
     case 0:
-      printf("((%d %c %d) %c %d) %c %d\n", int(num[0]), temp[op[0]],
-             int(num[1]), temp[op[1]], int(num[2]), temp[op[2]], int(num[3]));
+      sprintf(outputString, "((%d %c %d) %c %d) %c %d\n", int(num[0]),
+              temp[op[0]], int(num[1]), temp[op[1]], int(num[2]), temp[op[2]],
+              int(num[3]));
       break;
     case 1:
-      printf("(%d %c (%d %c %d)) %c %d\n", int(num[0]), temp[op[1]],
-             int(num[1]), temp[op[0]], int(num[2]), temp[op[2]], int(num[3]));
+      sprintf(outputString, "(%d %c (%d %c %d)) %c %d\n", int(num[0]),
+              temp[op[1]], int(num[1]), temp[op[0]], int(num[2]), temp[op[2]],
+              int(num[3]));
       break;
     case 2:
-      printf("%d %c ((%d %c %d) %c %d)\n", int(num[0]), temp[op[2]],
-             int(num[1]), temp[op[0]], int(num[2]), temp[op[1]], int(num[3]));
+      sprintf(outputString, "%d %c ((%d %c %d) %c %d)\n", int(num[0]),
+              temp[op[2]], int(num[1]), temp[op[0]], int(num[2]), temp[op[1]],
+              int(num[3]));
       break;
     case 3:
-      printf("%d %c (%d %c (%d %c %d))\n", int(num[0]), temp[op[2]],
-             int(num[1]), temp[op[1]], int(num[2]), temp[op[0]], int(num[3]));
+      sprintf(outputString, "%d %c (%d %c (%d %c %d))\n", int(num[0]),
+              temp[op[2]], int(num[1]), temp[op[1]], int(num[2]), temp[op[0]],
+              int(num[3]));
       break;
     case 4:
-      printf("(%d %c %d) %c (%d %c %d)\n", int(num[0]), temp[op[0]],
-             int(num[1]), temp[op[2]], int(num[2]), temp[op[1]], int(num[3]));
+      sprintf(outputString, "(%d %c %d) %c (%d %c %d)\n", int(num[0]),
+              temp[op[0]], int(num[1]), temp[op[2]], int(num[2]), temp[op[1]],
+              int(num[3]));
       break;
   }
 }
@@ -110,15 +118,35 @@ bool handleInput(float inputArr[4]) {
   inputMap["Q"] = 12.0;
   inputMap["K"] = 13.0;
 
-  for (int i = 0; i < 4; i++) {
-    std::string temp;
-    std::cin >> temp;
+  int tempInput;
+  std::cout << "Ketik 1 untuk melakukan input secara manual\nKetik 2 untuk "
+               "melakukan input secara random\n";
+  std::cin >> tempInput;
 
-    if (inputMap.find(temp) == inputMap.end()) {
-      return false;
+  if (tempInput == 1) {
+    std::cout << "Cards: ";
+    for (int i = 0; i < 4; i++) {
+      std::string temp;
+      std::cin >> temp;
+
+      if (inputMap.find(temp) == inputMap.end()) {
+        return false;
+      }
+
+      inputArr[i] = inputMap[temp];
     }
-
-    inputArr[i] = inputMap[temp];
+    return true;
+  } else if (tempInput == 2) {
+    srand(time(0));
+    std::cout << "Cards: ";
+    for (int i = 0; i < 4; i++) {
+      int randNum = rand() % 13;
+      std::cout << cards[randNum] << ' ';
+      inputArr[i] = (float)(randNum + 1);
+    }
+    std::cout << '\n';
+    return true;
   }
-  return true;
+
+  return false;
 }
