@@ -73,16 +73,32 @@ int main() {
   auto stopTime = high_resolution_clock::now();
 
   if (solutionCount > 0) {
-    std::cout << solutionCount << " solutions found\n";
+    std::cout << solutionCount << " solusi ditemukan\n";
     for (std::string s : resultArray) {
       std::cout << s;
     }
   } else {
-    std::cout << "No solution found\n";
+    std::cout << "Tidak ada solusi yang ditemukan\n";
+  }
+
+  int tempInput;
+  std::cout << "Ketik 1 untuk menyimpan hasil ke file\nKetik 2 untuk keluar "
+               "dari program\n";
+  std::cin >> tempInput;
+
+  if (tempInput == 1) {
+    std::string fileName;
+    std::cout << "Nama file: ";
+    std::cin >> fileName;
+    std::string filePath = "./test/" + fileName;
+    writeToFile(filePath, resultArray);
+    std::cout << "Berhasil menyimpan hasil ke file\n";
+  } else if (tempInput != 2) {
+    std::cout << "Masukkan tidak valid\n";
   }
 
   microseconds execTime = duration_cast<microseconds>(stopTime - startTime);
-  printf("Algorithm execution time: %ld microseconds\n", execTime.count());
+  printf("Waktu eksekusi algoritma: %ld microseconds\n", execTime.count());
 
   return 0;
 }

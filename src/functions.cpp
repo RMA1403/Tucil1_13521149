@@ -1,9 +1,11 @@
 #include <time.h>
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <tuple>
+#include <vector>
 
 // Fungsi untuk melakukan perhitungan val1 op val2
 std::tuple<float, bool> calc(float val1, float val2, int op) {
@@ -124,7 +126,7 @@ bool handleInput(float inputArr[4]) {
   std::cin >> tempInput;
 
   if (tempInput == 1) {
-    std::cout << "Cards: ";
+    std::cout << "Kartu: ";
     for (int i = 0; i < 4; i++) {
       std::string temp;
       std::cin >> temp;
@@ -138,7 +140,7 @@ bool handleInput(float inputArr[4]) {
     return true;
   } else if (tempInput == 2) {
     srand(time(0));
-    std::cout << "Cards: ";
+    std::cout << "Kartu: ";
     for (int i = 0; i < 4; i++) {
       int randNum = rand() % 13;
       std::cout << cards[randNum] << ' ';
@@ -149,4 +151,14 @@ bool handleInput(float inputArr[4]) {
   }
 
   return false;
+}
+
+// Fungsi untuk menulis hasil ke file
+void writeToFile(std::string filePath, std::vector<std::string> resultArray) {
+  std::ofstream outputFile;
+  outputFile.open(filePath);
+  for (std::string s : resultArray) {
+    outputFile << s;
+  }
+  outputFile.close();
 }
