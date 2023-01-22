@@ -22,13 +22,13 @@ int main() {
 
   auto startTime = high_resolution_clock::now();
 
+  int permutedOps[64][3];
+  float permutedInputs[24][4];
+
+  permuteOperator(permutedOps);
+  permuteInput(permutedInputs, userInput);
+
   for (int order = 0; order < 5; order++) {
-    int permutedOps[64][3];
-    float permutedInputs[24][4];
-
-    permuteOperator(permutedOps);
-    permuteInput(permutedInputs, userInput);
-
     for (int i = 0; i < 24; i++) {
       for (int j = 0; j < 64; j++) {
         std::stack<float> operationStack;
