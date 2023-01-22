@@ -15,9 +15,9 @@ int main() {
   std::vector<std::string> resultArray;
 
   bool isInputValid = handleInput(userInput);
-  if (!isInputValid) {
-    std::cout << "Masukkan tidak valid\n";
-    return 0;
+  while (!isInputValid) {
+    std::cout << "Masukkan tidak valid!\n";
+    isInputValid = handleInput(userInput);
   }
 
   auto startTime = high_resolution_clock::now();
@@ -86,6 +86,13 @@ int main() {
                "dari program\n";
   std::cin >> tempInput;
 
+  while (tempInput != 1 && tempInput != 2) {
+    std::cout << "Masukkan tidak valid!\n";
+    std::cout << "Ketik 1 untuk menyimpan hasil ke file\nKetik 2 untuk keluar "
+                 "dari program\n";
+    std::cin >> tempInput;
+  }
+
   if (tempInput == 1) {
     std::string fileName;
     std::cout << "Nama file: ";
@@ -93,8 +100,6 @@ int main() {
     std::string filePath = "./test/" + fileName;
     writeToFile(filePath, resultArray);
     std::cout << "Berhasil menyimpan hasil ke file\n";
-  } else if (tempInput != 2) {
-    std::cout << "Masukkan tidak valid\n";
   }
 
   microseconds execTime = duration_cast<microseconds>(stopTime - startTime);
