@@ -125,6 +125,7 @@ bool handleInput(float inputArr[4]) {
                "melakukan input secara random\n";
   std::cin >> tempInput;
 
+  bool isValid = true;
   if (tempInput == 1) {
     std::cout << "Kartu: ";
     for (int i = 0; i < 4; i++) {
@@ -132,12 +133,11 @@ bool handleInput(float inputArr[4]) {
       std::cin >> temp;
 
       if (inputMap.find(temp) == inputMap.end()) {
-        return false;
+        isValid = false;
       }
 
       inputArr[i] = inputMap[temp];
     }
-    return true;
   } else if (tempInput == 2) {
     srand(time(0));
     std::cout << "Kartu: ";
@@ -150,13 +150,19 @@ bool handleInput(float inputArr[4]) {
     return true;
   }
 
-  return false;
+  return isValid;
 }
 
 // Fungsi untuk menulis hasil ke file
-void writeToFile(std::string filePath, std::vector<std::string> resultArray) {
+void writeToFile(std::string filePath, std::vector<std::string> resultArray, std::string count, float cardsArr[4]) {
   std::ofstream outputFile;
   outputFile.open(filePath);
+  outputFile << "Kartu: ";
+  for(int i = 0; i < 4; i++) {
+    outputFile << cards[(int) cardsArr[i] - 1] << ' ';
+  }
+  outputFile << '\n';
+  outputFile << count;
   for (std::string s : resultArray) {
     outputFile << s;
   }

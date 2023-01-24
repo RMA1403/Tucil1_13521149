@@ -72,12 +72,15 @@ int main() {
 
   auto stopTime = high_resolution_clock::now();
 
+  char solutionString[22];
   if (solutionCount > 0) {
+    sprintf(solutionString, "%d solusi ditemukan\n", solutionCount);
     std::cout << solutionCount << " solusi ditemukan\n";
     for (std::string s : resultArray) {
       std::cout << s;
     }
   } else {
+    sprintf(solutionString, "Tidak ada solusi yang ditemukan\n");
     std::cout << "Tidak ada solusi yang ditemukan\n";
   }
 
@@ -98,7 +101,7 @@ int main() {
     std::cout << "Nama file: ";
     std::cin >> fileName;
     std::string filePath = "./test/" + fileName;
-    writeToFile(filePath, resultArray);
+    writeToFile(filePath, resultArray, (std::string) solutionString, userInput);
     std::cout << "Berhasil menyimpan hasil ke file\n";
   }
 
